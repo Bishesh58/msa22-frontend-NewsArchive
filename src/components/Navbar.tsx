@@ -8,7 +8,7 @@ export default function Navbar({}: Props) {
         <p className="text-3xl font-bold">News Archive</p>
       </div>
 
-      <p className="font-thin text-lg leading-4 tracking-wider ">
+      <p className="font-thin text-sm lg:text-lg leading-4 tracking-wider ">
         "Get updated with the latest news around the world!"
       </p>
       <div className="w-[80%] border-[2px] bg-teal-800 "></div>

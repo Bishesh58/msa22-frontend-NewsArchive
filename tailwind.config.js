@@ -6,6 +6,9 @@ module.exports = {
       fontFamily: {
         Lato: ["Lato", "sans-serif"],
       },
+      colors: {
+        primary: '#00ADED'
+      }
     },
   },
   plugins: [],
