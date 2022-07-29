@@ -1,10 +1,13 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
-
+import { useCallback, useEffect, useState } from "react";
+import { useAppSelector, useAppDispatch } from "../app/hooks";
 import { News } from "../../typings";
+
 type Props = {};
 
 export default function Widgets({}: Props) {
+
+  
   const [trending, setTrending] = useState<News[]>([]);
   const baseURL = "https://newsapi.org/v2";
   const getTrending = () => {
@@ -23,15 +26,15 @@ export default function Widgets({}: Props) {
   };
 
   useEffect(() => {
-    getTrending();
+    //getTrending();
   }, []);
 
   return (
-    <div className="hidden lg:inline col-span-2 max-h-screen overflow-scroll scrollbar-hide">
+    <div className="hidden lg:inline col-span-2 max-h-screen overflow-auto scrollbar-hide">
       <div>
-        {trending.map((item) => (
+        {/* {trending.map((item) => (
           <p>{item.title}</p>
-        ))}
+        ))} */}
       </div>
     </div>
   );
