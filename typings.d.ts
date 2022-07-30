@@ -1,9 +1,14 @@
 export interface News {
-  author: string;
+  uuid: string;
   title: string;
-  url: string;
-  urlToImage: string;
   description: string;
-  content: string;
-  source: object;
+  keywords: string;
+  snippet: string;
+  url: string;
+  image_url: string;
+  publishe_at: string;
+  source: string;
+  categories: [];
+  relevance_score: null | undefined;
+  locale: string;
 }

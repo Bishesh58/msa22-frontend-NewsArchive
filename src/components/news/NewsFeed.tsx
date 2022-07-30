@@ -1,34 +1,18 @@
 import { SearchIcon, RefreshIcon } from "@heroicons/react/outline";
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import axios from "axios";
 import Thumbnail from "./Thumbnail";
-import { News } from "../../../typings";
+
 import { useAppSelector, useAppDispatch } from "../../app/hooks";
-import { getHeadlines } from "../../slices/newsSlice";
-import { setTimeout } from "timers/promises";
+
 export default function NewsFeed() {
   const [input, setInput] = useState<string>("");
 
   const { news } = useAppSelector((state) => state.news);
-  
-  const dispatch = useAppDispatch();
-  const baseURL = "https://newsapi.org/v2";
 
-  const getCategory = (category: string) => {
-    //https://newsapi.org/v2/top-headlines/sources?category=businessapiKey=API_KEY
-    // axios
-    //   .get(
-    //     `${baseURL}/top-headlines?category=${category}apiKey=${process.env.REACT_APP_API_KEY}`
-    //   )
-    //   .then((res) => {
-    //     const news: News[] = res.data.articles;
-    //     setNewsList(news);
-    //   })
-    //   .catch((err) => {
-    //     console.log(err.message);
-    //   });
-  };
+  const dispatch = useAppDispatch();
+
+  const getCategory = (category: string) => {};
 
   useEffect(() => {}, []);
 
@@ -68,10 +52,10 @@ export default function NewsFeed() {
         <h1 className="font-bold">Top headlines</h1>
         <RefreshIcon className="mr-5 mt-5 h-8 w-8 cursor-pointer text-primary transition-all ease-out duration-500 hover:rotate-180 active:scale-125" />
       </div>
-      <div className="max-h-screen overflow-auto border-x scrollbar-hide">
-        {/* { news.map((newItem, i) => (
-          <p key={i}>{newItem.title}</p>
-        ))} */}
+      <div className="max-h-screen overflow-auto border-x scrollbar-hide py-4">
+        {news.map((newItem, i) => (
+          <Thumbnail key={i} newItem={newItem} />
+        ))}
       </div>
     </div>
   );

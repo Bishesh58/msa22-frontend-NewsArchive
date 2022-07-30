@@ -8,11 +8,12 @@ export const getHeadlines = createAsyncThunk(
   "news/fetchHeadlines",
   async (_, thunkAPI) => {
     try {
- 
- 
-      const response = axios.get(`https://gateway.marvel.com:443/v1/public/characters?apikey=${process.env.REACT_APP_API_KEY}`)
-      const data = JSON.stringify(response)
-      return  data;
+      const response = axios.get(
+        `https://api.thenewsapi.com/v1/news/top?api_token=${process.env.REACT_APP_API_KEY}&locale=nz`
+      );
+      const data = (await response).data.data;
+      console.log(data);
+      return data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
