@@ -20,6 +20,22 @@ export const getHeadlines = createAsyncThunk(
   }
 );
 
+export const getQueryNews = createAsyncThunk(
+  "news/fetchQueryNews",
+  async (query: string, thunkAPI) => {
+    try {
+      const response = axios.get(
+        `https://api.thenewsapi.com/v1/news/all?api_token=${process.env.REACT_APP_API_KEY}&search=${query}`
+      );
+      const data = (await response).data.data;
+      console.log(data);
+      return data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
 interface NewsState {
   news: News[];
   loading: boolean;
@@ -46,13 +62,26 @@ export const newsSlice = createSlice({
     builder.addCase(getHeadlines.pending, (state) => {
       state.loading = true;
     });
+    builder.addCase(getQueryNews.pending, (state) => {
+      state.loading = true;
+    });
     //promise fulfilled
     builder.addCase(getHeadlines.fulfilled, (state, action) => {
       state.loading = false;
       state.news = action.payload;
     });
+    builder.addCase(getQueryNews.fulfilled, (state, action) => {
+      state.loading = false;
+      state.news = action.payload;
+    });
+
     //promise fulfilled
     builder.addCase(getHeadlines.rejected, (state, action) => {
+      state.error = action.payload;
+      state.loading = false;
+    });
+
+    builder.addCase(getQueryNews.rejected, (state, action) => {
       state.error = action.payload;
       state.loading = false;
     });

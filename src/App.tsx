@@ -2,9 +2,8 @@ import NewsFeed from "./components/news/NewsFeed";
 import Navbar from "./components/Navbar";
 import Sidebar from "./components/sidebar/Sidebar";
 import Widgets from "./components/Widgets";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect } from "react";
 import { useAppSelector, useAppDispatch } from "./app/hooks";
-import { News } from "../typings";
 import { getHeadlines } from "./slices/newsSlice";
 
 const App = () => {
@@ -12,8 +11,7 @@ const App = () => {
 
   //due to async fun for fetching data
   const initApp = useCallback(async () => {
-   await dispatch(getHeadlines());
-    
+    await dispatch(getHeadlines());
   }, [dispatch]);
 
   useEffect(() => {
