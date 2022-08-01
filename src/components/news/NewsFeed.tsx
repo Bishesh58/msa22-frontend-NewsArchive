@@ -2,14 +2,14 @@ import { SearchIcon, RefreshIcon } from "@heroicons/react/outline";
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import Thumbnail from "./Thumbnail";
-import { getQueryNews } from "../../slices/newsSlice";
+import { getQueryNews, getHeadlines } from "../../slices/newsSlice";
 
 import { useAppSelector, useAppDispatch } from "../../app/hooks";
 
 export default function NewsFeed() {
   const [input, setInput] = useState<string>("");
 
-  const { news } = useAppSelector((state) => state.news);
+  const { news, error } = useAppSelector((state) => state.news);
 
   const dispatch = useAppDispatch();
 
@@ -19,7 +19,11 @@ export default function NewsFeed() {
 
   const handleSubmit = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
-    dispatch(getQueryNews(input));
+    if (input.trim()) {
+      dispatch(getQueryNews(input));
+    } else {
+      alert("Enter value to search! e.g. Elon Musk");
+    }
   };
 
   return (
@@ -42,13 +46,16 @@ export default function NewsFeed() {
       </div>
       <div className="flex items-center justify-between">
         <h1 className="font-bold">Top headlines</h1>
-        <RefreshIcon className="mr-5 mt-5 h-8 w-8 cursor-pointer text-primary transition-all ease-out duration-500 hover:rotate-180 active:scale-125" />
+        <RefreshIcon
+          onClick={() => dispatch(getHeadlines())}
+          className="mr-5 mt-5 h-8 w-8 cursor-pointer text-primary transition-all ease-out duration-500 hover:rotate-180 active:scale-125"
+        />
       </div>
       <div className="max-h-screen overflow-auto border-x scrollbar-hide my-4">
-        {news.map((newItem, i) => (
-          <Thumbnail key={i} newItem={newItem} />
-        ))}
+        {news &&
+          news.map((newItem, i) => <Thumbnail key={i} newItem={newItem} />)}
       </div>
+      <div>{error && <p>No search result found!</p>}</div>
     </div>
   );
 }

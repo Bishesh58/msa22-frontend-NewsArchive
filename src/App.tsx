@@ -12,6 +12,7 @@ const App = () => {
   //due to async fun for fetching data
   const initApp = useCallback(async () => {
     await dispatch(getHeadlines());
+   
   }, [dispatch]);
 
   useEffect(() => {

@@ -1,10 +1,12 @@
 import { configureStore } from "@reduxjs/toolkit";
 
 import newsSlice from "../slices/newsSlice";
+import widgetSlice from "../slices/widgetSlice";
 
 export const store = configureStore({
   reducer: {
     news: newsSlice,
+    widgets: widgetSlice,
   },
 });
 

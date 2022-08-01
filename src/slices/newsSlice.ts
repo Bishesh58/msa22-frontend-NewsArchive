@@ -1,18 +1,36 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
-import type { RootState } from "../app/store";
 import { News } from "../../typings";
 import axios from "axios";
+
+interface NewsState {
+  news: News[] | undefined;
+  loading: boolean;
+  error: any;
+}
+
+const initialState: NewsState = {
+  loading: false,
+  news: [],
+  error: null,
+};
 
 export const getHeadlines = createAsyncThunk(
   "news/fetchHeadlines",
   async (_, thunkAPI) => {
     try {
-      const response = axios.get(
-        `https://api.thenewsapi.com/v1/news/top?api_token=${process.env.REACT_APP_API_KEY}&locale=nz`
-      );
-      const data = (await response).data.data;
-      console.log(data);
+      const options = {
+        method: "GET",
+        url: "https://free-news.p.rapidapi.com/v1/search",
+        params: { q: "headlines" || "today", lang: "en" },
+        headers: {
+          "X-RapidAPI-Key": process.env.REACT_APP_RAPIDAPI_KEY as string,
+          "X-RapidAPI-Host": "free-news.p.rapidapi.com",
+        },
+      };
+      const response = axios.request(options);
+      const data = (await response).data.articles;
+
       return data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -24,29 +42,24 @@ export const getQueryNews = createAsyncThunk(
   "news/fetchQueryNews",
   async (query: string, thunkAPI) => {
     try {
-      const response = axios.get(
-        `https://api.thenewsapi.com/v1/news/all?api_token=${process.env.REACT_APP_API_KEY}&search=${query}`
-      );
-      const data = (await response).data.data;
-      console.log(data);
+      const options = {
+        method: "GET",
+        url: "https://free-news.p.rapidapi.com/v1/search",
+        params: { q: query, lang: "en" },
+        headers: {
+          "X-RapidAPI-Key": process.env.REACT_APP_RAPIDAPI_KEY as string,
+          "X-RapidAPI-Host": "free-news.p.rapidapi.com",
+        },
+      };
+      const response = axios.request(options);
+      const data = (await response).data.articles;
+
       return data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
   }
 );
-
-interface NewsState {
-  news: News[];
-  loading: boolean;
-  error: any;
-}
-
-const initialState: NewsState = {
-  loading: false,
-  news: [],
-  error: null,
-};
 
 export const newsSlice = createSlice({
   name: "news",
