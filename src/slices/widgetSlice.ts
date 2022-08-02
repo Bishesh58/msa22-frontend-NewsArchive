@@ -11,7 +11,7 @@ export const getTrending = createAsyncThunk(
         `https://api.thenewsapi.com/v1/news/top?api_token=${process.env.REACT_APP_THENEWS_KEY}&locale=nz`
       );
       const data = (await response).data.data;
-      console.log(data);
+      localStorage.setItem("trending", JSON.stringify(data));
       return data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
