@@ -1,8 +1,7 @@
-import { SearchIcon, RefreshIcon } from "@heroicons/react/outline";
+import { SearchIcon } from "@heroicons/react/outline";
 import { useEffect, useState } from "react";
-import { motion } from "framer-motion";
 import Thumbnail from "./Thumbnail";
-import { getQueryNews, getHeadlines } from "../../slices/newsSlice";
+import { getQueryNews } from "../../slices/newsSlice";
 
 import { useAppSelector, useAppDispatch } from "../../app/hooks";
 
@@ -44,13 +43,9 @@ export default function NewsFeed() {
           </button>
         </form>
       </div>
-      <div className="flex items-center justify-between">
-        <h1 className="font-bold">Top headlines</h1>
-        <RefreshIcon
-          onClick={() => dispatch(getHeadlines())}
-          className="mr-5 mt-5 h-8 w-8 cursor-pointer text-primary transition-all ease-out duration-500 hover:rotate-180 active:scale-125"
-        />
-      </div>
+
+      <h1 className="font-bold py-2">Top headlines</h1>
+
       <div className="max-h-screen overflow-auto border-x scrollbar-hide my-4">
         {news &&
           news.map((newItem, i) => <Thumbnail key={i} newItem={newItem} />)}
