@@ -2,6 +2,7 @@
 ## is an online news search application. 
 
 You can read and search news based on different category such as Technology, Business, Health, Science and son on. You also have ability to search any topic you would like to search. 
+## Live demo: https://news-archive-pi.vercel.app/
 
 ## Technologies and libraries used:
 - React typescript
