@@ -10,7 +10,6 @@ import {
 } from "@heroicons/react/outline";
 
 import SidebarRow from "./SidebarRow";
-
 export default function Sidebar() {
   return (
     <div className="flex flex-col px-4 col-span-2">
